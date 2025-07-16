@@ -11,8 +11,6 @@
 - 评估结果图表与列表展示
 
 ## 目录结构
-- include/      头文件
-- src/          源文件
 - model/        各类模型实现
 - controller/   控制器实现
 - view/         GTK界面实现
