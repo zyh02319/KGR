@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.10)
+project(KGR)
+set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(MYSQL REQUIRED mysqlclient)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
+include_directories(
+    ${GTK3_INCLUDE_DIRS}
+    ${MYSQL_INCLUDE_DIRS}
+    include
+    model
+    controller
+    view
+    data
+)
+
+link_directories(${GTK3_LIBRARY_DIRS} ${MYSQL_LIBRARY_DIRS})
+add_definitions(${GTK3_CFLAGS_OTHER})
+
+# 手动列出所有源文件和头文件
+add_executable(KGR
+    main.cpp
+    view/src/DetectionPerformanceView.cpp
+    view/DetectionPerformanceView.h
+    view/src/MainWindow.cpp
+    view/MainWindow.h
+    view/src/ModelManagerView.cpp
+    view/ModelManagerView.h
+    view/src/RealtimeSimulationView.cpp
+    view/RealtimeSimulationView.h
+    view/src/PostMissionEvaluationView.cpp
+    view/PostMissionEvaluationView.h
+    # 其他 cpp/h 文件
+)
+
+
+target_link_libraries(KGR Qt5::Widgets ${GTK3_LIBRARIES} ${MYSQL_LIBRARIES})
